@@ -6,6 +6,8 @@ import {PasswordField} from '../components/form/PasswordField.tsx'
 import {FormTextField} from '../components/form/FormTextField.tsx'
 import { Button, Paper, Stack, Typography} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
+import {useDispatch} from "react-redux";
+import {loginSuccess} from '../../src/store/slices/authSlice.ts'
 
 
 export const LoginPage = () => {
@@ -23,13 +25,19 @@ export const LoginPage = () => {
         },
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onSubmit = async (data: LoginFormData) => {
         await new Promise((resolve) => {
             setTimeout(resolve, 2000)
         })
 
-        console.log(data);
+        dispatch(
+            loginSuccess({
+                email: data.email,
+                token: 'fake-token-123',
+            })
+        )
         navigate('/dashboard');
     };
 
