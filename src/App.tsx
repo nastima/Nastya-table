@@ -1,13 +1,10 @@
 // import { useState } from 'react'
+import {LoginPage} from "./pages/LoginPage";
 import './App.css'
 
 function App() {
 
-  return (
-    <>
-
-    </>
-  )
+  return <LoginPage />
 }
 
 export default App
