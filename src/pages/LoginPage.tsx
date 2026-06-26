@@ -7,7 +7,7 @@ import {FormTextField} from '../components/form/FormTextField.tsx'
 import { Button, Paper, Stack, Typography} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from "react-redux";
-import {loginSuccess} from '../../src/store/slices/authSlice.ts'
+import {loginSuccess} from '../store/slices/authSlice.ts'
 
 
 export const LoginPage = () => {
