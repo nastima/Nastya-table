@@ -1,43 +1,64 @@
-import {useForm} from 'react-hook-form'
+import { useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod';
 import { loginSchema} from '../shared/schemas/LoginSchema.ts';
 import type {LoginFormData} from '../shared/schemas/LoginSchema.ts';
+import {PasswordField} from '../components/form/PasswordField.tsx'
+import {FormTextField} from '../components/form/FormTextField.tsx'
+import { Button, Paper, Stack, Typography} from "@mui/material";
+
 
 export const LoginPage = () => {
     const {
-        register,
+        control,
         handleSubmit,
-        formState: {errors},
-    } = useForm<LoginFormData>({resolver: zodResolver(loginSchema)});
+        formState: {
+            isSubmitting,
+        },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
+    const onSubmit = async (data: LoginFormData) => {
+        console.log("Отправка...");
 
-    const onSubmit = (data: LoginFormData) => {console.log(data)};
+        await new Promise((resolve) => {
+            setTimeout(resolve, 2000)
+        })
+
+        console.log(data);
+    };
+
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <input
-                    placeholder='Email'
-                    {...register('email')}
-                />
+        <Stack
+            sx={{
+                minHeight: '100vh',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#f5f5f5'
+            }}
+        >
+            <Paper
+                elevation={6}
+                sx={{
+                    width: 400,
+                    padding: 4,
+                }}
+            >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Stack spacing={3}>
+                        <Typography variant='h4'>Login</Typography>
+                        <FormTextField<LoginFormData> control={control} name='email' label='Email'/>
 
-                {errors.email && (
-                    <p>{errors.email.message}</p>
-                )}
-            </div>
+                        <PasswordField control={control}/>
 
-            <div>
-                <input
-                    type='password'
-                    placeholder='Пароль'
-                    {...register('password')}
-                />
-
-                {errors.password && (
-                    <p>{errors.password.message}</p>
-                )}
-            </div>
-
-            <button type='submit'>Войти</button>
-        </form>
-    );
+                        <Button variant='contained' type='submit' size='large' disabled={isSubmitting}>Вход</Button>
+                    </Stack>
+                </form>
+            </Paper>
+        </Stack>
+);
 };
