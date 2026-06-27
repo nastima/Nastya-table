@@ -1,4 +1,4 @@
-import {UsersTable} from '../features/users/UsersTable.tsx';
+import {UsersTable} from '../features/users/table/UsersTable.tsx';
 
 export const DashboardPage = () => {
     return <UsersTable/>
