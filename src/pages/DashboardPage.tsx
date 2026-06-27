@@ -1,16 +1,15 @@
-import {Typography} from "@mui/material";
-
+import {useGetUsersQuery} from '../store/api/usersApi.ts';
 
 export const DashboardPage = () => {
-    return (
-        <div>
-            <Typography variant='h3'>
-                Dashboard
-            </Typography>
+    console.log('render dashboard');
+    const result = useGetUsersQuery();
+    console.log(result);
 
-            <Typography>
-                Здесь будут графики, таблицы и дашборды
-            </Typography>
-        </div>
+    if (result.isLoading) return <div>Loading...</div>;
+
+    return (
+        <pre>
+            {JSON.stringify(result.data, null, 2)}
+        </pre>
     )
 }
