@@ -1,10 +1,12 @@
 import {useGetUsersQuery} from "../../store/api/usersApi.ts";
 import {Table, TableBody, TableCell, TableHead, TableRow, Paper} from '@mui/material';
 import type {User} from "../../store/api/types.ts";
+import {mockUsers} from "./mockusers.ts";
 
 
 export const UsersTable = () => {
     const {data, isLoading} = useGetUsersQuery();
+    const bigData = mockUsers(data?.users || [], 3000)
 
     if(isLoading) return <div>Loading...</div>
 
@@ -23,7 +25,7 @@ export const UsersTable = () => {
                 </TableHead>
 
                 <TableBody>
-                    {data?.users?.map((user: User) => (
+                    {bigData.map((user: User) => (
                         <TableRow key={user.id}>
                             <TableCell>{user.id}</TableCell>
                             <TableCell>
