@@ -11,9 +11,11 @@ export const useUsersTable = () => {
     }, [data]);
 
     const bigData = useMemo(() => {
+        if(users.length === 0) return [];
+
         const result = [];
 
-        for(let i=0; i< 3000 ; i++) {
+        for(let i=0; i< 50000 ; i++) {
             const user = users[i % users.length];
 
             result.push({
