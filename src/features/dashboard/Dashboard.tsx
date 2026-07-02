@@ -2,16 +2,18 @@ import {AgeChart} from "./charts/AgeChart.tsx";
 import {CityChart} from "./charts/CityChart.tsx";
 import { useState} from "react";
 import {CityFilter} from "./charts/CityFilter.tsx";
+import {useWebSocket} from "../../hooks/useWebSocket.ts";
 
 
 export const Dashboard = () => {
-    const [selectedCity, setSelectedSity] = useState<string>('all');
+    useWebSocket();
+    const [selectedCity, setSelectedCity] = useState<string>('all');
 
     return (
         <div>
             <CityFilter
                 selectedCity={selectedCity}
-                setSelectedCity={setSelectedSity}
+                setSelectedCity={setSelectedCity}
             />
 
             <div>

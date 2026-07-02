@@ -1,30 +1,13 @@
-import {useMemo} from 'react'
 import {useReactTable, getCoreRowModel} from '@tanstack/react-table';
 import {useGetUsersQuery} from "../../../store/api/usersApi.ts";
 import {columns} from "./columns.ts";
+import {useSelector} from "react-redux";
+import {selectBigUsers} from "../../../store/users/usersSelectors.ts";
 
 export const useUsersTable = () => {
-    const {data, isLoading} = useGetUsersQuery();
+   const {isLoading} = useGetUsersQuery();
 
-    const users = useMemo(() => {
-        return data?.users ?? [];
-    }, [data]);
-
-    const bigData = useMemo(() => {
-        if(users.length === 0) return [];
-
-        const result = [];
-
-        for(let i=0; i< 50000 ; i++) {
-            const user = users[i % users.length];
-
-            result.push({
-                ...user,
-                id: i+1,
-            });
-        }
-        return result;
-    }, [users])
+    const bigData = useSelector(selectBigUsers);
 
     const table = useReactTable({
         data: bigData,
