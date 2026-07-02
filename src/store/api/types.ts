@@ -6,6 +6,7 @@ export interface User {
     age: number;
     phone: string;
     image: string;
+    registeredAt: string;
     company: {
         name: string;
     };
