@@ -1,4 +1,5 @@
-import {useGetUsersQuery} from "../../../store/api/usersApi.ts";
+import {useSelector} from "react-redux";
+import {selectAllUsers} from "../../../store/users/usersSelectors.ts";
 
 type Props = {
     selectedCity: string;
@@ -6,9 +7,8 @@ type Props = {
 };
 
 export const CityFilter = ({selectedCity, setSelectedCity}: Props) => {
-    const {data} = useGetUsersQuery();
 
-    const users = data?.users ?? [];
+    const users = useSelector(selectAllUsers)
 
     const cities = Array.from(
         new Set(users.map(u => u.address?.city ?? 'Unknown'))

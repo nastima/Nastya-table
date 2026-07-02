@@ -1,18 +1,19 @@
 import ReactECharts from "echarts-for-react";
 import {useGetUsersQuery} from '../../../store/api/usersApi.ts';
+import {useSelector} from "react-redux";
+import {selectAllUsers} from "../../../store/users/usersSelectors.ts";
 
 type Props = {
     selectedCity: string;
 }
 
 export const CityChart = ({selectedCity}:Props) => {
-    const {data, isLoading} = useGetUsersQuery();
+    const {isLoading} = useGetUsersQuery();
+    const users = useSelector(selectAllUsers);
 
     if(isLoading) {
         return <div>Loading...</div>
     }
-
-    const users = data?.users ?? [];
 
     const filtered = selectedCity === 'all'
         ? users
