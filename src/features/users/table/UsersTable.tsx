@@ -60,7 +60,7 @@ export const UsersTable = () => {
                         style={{
                             display: 'flex',
                             fontWeight: 700,
-                            borderBottom: '2px solid red',
+                            borderBottom: '2px solid #000',
                         }}
                     >
                         {headers.map((header) => (
