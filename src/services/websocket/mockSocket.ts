@@ -40,6 +40,7 @@ export class MockSocket {
                 address: {
                     city: "Berlin",
                 },
+                registeredAt: "2026-07-06T12:00:00Z"
             };
 
             const message: WebSocketMessage = {
