@@ -13,6 +13,9 @@ export interface User {
     address: {
         city: string;
     };
+    status: 'online' | 'offline';
+    score: number;
+    updatedAt: number;
 }
 
 export interface UsersResponse {

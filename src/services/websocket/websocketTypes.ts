@@ -9,7 +9,10 @@ export const WebSocketEvent = {
 export type WebSocketMessage =
     | {
     type: typeof WebSocketEvent.USER_UPDATED;
-    payload: User;
+    payload: {
+        id: number;
+        changes: Partial<User>;
+    };
 }
     | {
     type: typeof WebSocketEvent.USER_CREATED;

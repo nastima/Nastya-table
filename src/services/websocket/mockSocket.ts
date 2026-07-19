@@ -1,14 +1,4 @@
 import type { WebSocketMessage } from "./websocketTypes";
-import type { User } from "../../store/api/types";
-
-const firstNames = [
-    "Alex",
-    "John",
-    "Kate",
-    "Emma",
-    "Mike",
-    "Olivia",
-];
 
 export class MockSocket {
     private interval: number | null = null;
@@ -25,27 +15,26 @@ export class MockSocket {
         this.interval = window.setInterval(() => {
             const randomId = Math.floor(Math.random() * 30) + 1;
 
-            const user: User = {
-                id: randomId,
-                firstName:
-                    firstNames[Math.floor(Math.random() * firstNames.length)],
-                lastName: "Updated",
-                email: `user${randomId}@mail.com`,
-                age: 25,
-                phone: "+123456789",
-                image: "",
-                company: {
-                    name: "OpenAI",
-                },
-                address: {
-                    city: "Berlin",
-                },
-                registeredAt: "2026-07-06T12:00:00Z"
-            };
+            const isOldMessage = Math.random() > 0.5;
+
+            const updatedAt = isOldMessage
+                ? Date.now() - 100000
+                : Date.now() + 1000;
 
             const message: WebSocketMessage = {
                 type: "USER_UPDATED",
-                payload: user,
+
+                payload: {
+                    id: randomId,
+                    changes: {
+                        status: Math.random() > 0.5
+                            ? 'online'
+                            : 'offline',
+                        score: Math.floor(Math.random() * 100),
+
+                        updatedAt,
+                    }
+                },
             };
 
             this.listeners.forEach((listener) => listener(message));

@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import type {UsersResponse} from "./types.ts";
+import type {UsersResponse, User} from "./types.ts";
 import {setUsers} from "../users/usersSlice.ts";
 import {subDays} from "date-fns";
 
@@ -17,12 +17,20 @@ export const usersApi = createApi({
             async onQueryStarted(_, {dispatch, queryFulfilled}) {
                 try {
                     const {data} = await queryFulfilled;
-                    const users = data.users.map(user => ({
+                    const users: User[] = data.users.map(user => ({
                         ...user,
                         registeredAt: subDays(
                             new Date(),
                             Math.floor(Math.random() * 365)
                         ).toISOString(),
+
+                        status: Math.random() > 0.5
+                            ? 'online'
+                            : 'offline',
+
+                        score: Math.floor(Math.random() * 100),
+
+                        updatedAt: Date.now(),
                     }));
 
                     dispatch(setUsers(users))

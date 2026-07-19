@@ -15,8 +15,38 @@ const usersSlice = createSlice({
         addUser(state, action: PayloadAction<User>) {
             usersAdapter.addOne(state, action.payload);
         },
-        updateUser(state, action: PayloadAction<User>) {
-            usersAdapter.upsertOne(state, action.payload);
+        updateUser(
+            state,
+            action: PayloadAction<{
+                id: number;
+                changes: Partial<User>;
+            }>
+        ) {
+            const currentUser = state.entities[action.payload.id];
+            if(!currentUser) return;
+
+            const incomingUpdatedAt = action.payload.changes.updatedAt;
+            if (
+                incomingUpdatedAt &&
+                incomingUpdatedAt < currentUser.updatedAt
+            ) {
+                console.log(
+                    "Ignored outdated update",
+                    {
+                        id: action.payload.id,
+                        current: currentUser.updatedAt,
+                        incoming: incomingUpdatedAt,
+                    }
+                );
+                return;
+            }
+
+            console.log(
+                "Applied update",
+                action.payload
+            );
+            
+            usersAdapter.updateOne(state, action.payload);
         },
         removeUser(state, action: PayloadAction<number>) {
             usersAdapter.removeOne(state, action.payload);

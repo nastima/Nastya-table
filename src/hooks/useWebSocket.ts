@@ -31,4 +31,4 @@ export const useWebSocket = () => {
             mockSocket.disconnect();
         };
     }, [dispatch]);
-}
+};
