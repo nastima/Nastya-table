@@ -1,25 +1,22 @@
-import {AgeChart} from "./charts/AgeChart.tsx";
-import {CityChart} from "./charts/CityChart.tsx";
-import { useState} from "react";
-import {CityFilter} from "./charts/CityFilter.tsx";
-import {useWebSocket} from "../../hooks/useWebSocket.ts";
+import {DashboardToolbar} from "./components/DashboardToolbar.tsx";
+import {ChartsGrid} from "./components/ChartsGrid.tsx";
 
+type Props = {
+    selectedCity: string;
+    setSelectedCity: (city:string)=>void;
+};
 
-export const Dashboard = () => {
-    useWebSocket();
-    const [selectedCity, setSelectedCity] = useState<string>('all');
+export const Dashboard = ({selectedCity, setSelectedCity}:Props) => {
 
     return (
         <div>
-            <CityFilter
-                selectedCity={selectedCity}
+            <DashboardToolbar
+                selectedCity = {selectedCity}
                 setSelectedCity={setSelectedCity}
             />
-
-            <div>
-                <AgeChart selectedCity={selectedCity} />
-                <CityChart selectedCity={selectedCity} />
-            </div>
+            <ChartsGrid
+                selectedCity = {selectedCity}
+            />
         </div>
     )
 }

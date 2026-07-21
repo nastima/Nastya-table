@@ -3,10 +3,14 @@ import {flexRender} from '@tanstack/react-table';
 import {useUsersTable} from "./useUsersTable.ts";
 import { FixedSizeList } from 'react-window';
 import type { ListChildComponentProps } from 'react-window';
+import {memo} from "react";
 
+type Props = {
+    selectedCity: string;
+};
 
-export const UsersTable = () => {
-    const {table, isLoading} = useUsersTable();
+export const UsersTable = memo(({selectedCity}: Props) => {
+    const {table, isLoading} = useUsersTable(selectedCity);
 
 
     if(isLoading) return <div>Loading...</div>
@@ -92,4 +96,4 @@ export const UsersTable = () => {
             </div>
         </Paper>
     );
-};
+});
