@@ -4,7 +4,7 @@ import {RouterProvider} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {router} from './app/router';
 import {store} from './store';
-import {AppThemeProvider} from "./theme/ThemeContext.tsx";
+import {AppThemeProvider} from "./theme/ThemeProvider.tsx";
 
 
 
