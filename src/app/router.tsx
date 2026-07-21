@@ -1,7 +1,11 @@
 import {LoginPage} from "../pages/LoginPage.tsx";
-import {DashboardPage} from "../pages/DashboardPage.tsx";
+import {AnalyticsPage} from "../pages/dashboard/AnalyticsPage.tsx";
 import {createBrowserRouter} from 'react-router-dom';
 import {ProtectedRoute} from '../routes/ProtectedRoute.tsx';
+import {DashboardLayout} from '../pages/dashboard/DashboardLayout.tsx'
+import {MapPage} from "../pages/dashboard/MapPage.tsx";
+import {ScenarioPage} from "../pages/dashboard/ScenarioPage.tsx";
+import {ReportsPage} from "../pages/dashboard/ReportsPage.tsx";
 
 
 export const router = createBrowserRouter([
@@ -14,7 +18,26 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <DashboardPage/>,
+                element: <DashboardLayout/>,
+
+                children: [
+                    {
+                        index: true,
+                        element: <AnalyticsPage />,
+                    },
+                    {
+                        path: 'map',
+                        element: <MapPage />,
+                    },
+                    {
+                        path: 'scenario',
+                        element: <ScenarioPage />,
+                    },
+                    {
+                        path: 'reports',
+                        element: <ReportsPage />,
+                    },
+                ],
             },
         ],
     },
