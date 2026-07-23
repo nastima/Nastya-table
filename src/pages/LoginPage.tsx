@@ -48,7 +48,7 @@ export const LoginPage = () => {
                 minHeight: '100vh',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#f5f5f5'
+                backgroundColor: 'background.default',
             }}
         >
             <Paper
@@ -56,6 +56,7 @@ export const LoginPage = () => {
                 sx={{
                     width: 400,
                     padding: 4,
+                    backgroundColor: 'background.paper',
                 }}
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
