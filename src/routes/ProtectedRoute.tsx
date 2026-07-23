@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import type {RootState} from '../store';
+import type {RootState} from '../store/store';
 import {Navigate, Outlet} from 'react-router-dom';
 
 export const ProtectedRoute = () => {
