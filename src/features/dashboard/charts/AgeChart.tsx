@@ -1,23 +1,18 @@
 import ReactECharts from 'echarts-for-react';
-import {useSelector} from "react-redux";
-import {selectAllUsers} from "../../../store/users/usersSelectors.ts";
-import {useGetUsersQuery} from "../../../store/api/usersApi.ts";
+import type {User} from "../../../store/api/types.ts";
+import { useFilteredUsers } from "../../../hooks/useFilteredUsers.ts";
 
 type Props = {
     selectedCity: string;
+    users: User[];
 }
 
-export const AgeChart = ({selectedCity}:Props) => {
-    const users = useSelector(selectAllUsers);
-    const {isLoading} = useGetUsersQuery();
+export const AgeChart = ({selectedCity, users}:Props) => {
 
-    if(isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    const filtered = selectedCity === 'all'
-        ? users
-        : users.filter(u => (u.address?.city ?? 'Unknown') === selectedCity);
+    const filteredUsers = useFilteredUsers(
+        users,
+        selectedCity
+    );
 
     const groups = {
         '18-25': 0,
@@ -27,7 +22,7 @@ export const AgeChart = ({selectedCity}:Props) => {
         '56+': 0,
     }
 
-    for(const user of filtered) {
+    for(const user of filteredUsers) {
         if(!user) continue;
 
         const age = user.age;

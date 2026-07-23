@@ -27,10 +27,12 @@ export class MockSocket {
                 payload: {
                     id: randomId,
                     changes: {
-                        status: Math.random() > 0.5
+                        status: Math.random() > 0.7
                             ? 'online'
                             : 'offline',
                         score: Math.floor(Math.random() * 100),
+
+                        age: Math.floor(Math.random() * 43) + 18,
 
                         updatedAt,
                     }
