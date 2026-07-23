@@ -1,12 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice.ts';
 import {usersApi} from './api/usersApi.ts';
-import usersReducer from './users/usersSlice.ts'
+import usersReducer from './users/usersSlice.ts';
+import scoreHistoryReducer from './scoreHistory/scoreHistorySlice.ts';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         users: usersReducer,
+        scoreHistory: scoreHistoryReducer,
         [usersApi.reducerPath]: usersApi.reducer,
     },
 
