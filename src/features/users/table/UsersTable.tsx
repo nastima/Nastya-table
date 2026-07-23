@@ -9,11 +9,8 @@ type Props = {
     selectedCity: string;
 };
 
-export const UsersTable = memo(({selectedCity}: Props) => {
-    const {table, isLoading} = useUsersTable(selectedCity);
-
-
-    if(isLoading) return <div>Loading...</div>
+export const UsersTable = memo(({ selectedCity}: Props) => {
+    const {table} = useUsersTable( selectedCity);
 
     const rows = table.getRowModel().rows;
     const headers = table.getHeaderGroups()[0].headers;

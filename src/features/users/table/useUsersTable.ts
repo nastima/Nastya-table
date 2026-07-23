@@ -1,12 +1,10 @@
 import {useReactTable, getCoreRowModel} from '@tanstack/react-table';
-import {useGetUsersQuery} from "../../../store/api/usersApi.ts";
 import {columns} from "./columns.ts";
 import {useSelector} from "react-redux";
 import {selectBigUsers} from "../../../store/users/usersSelectors.ts";
 import {useMemo} from "react";
 
 export const useUsersTable = (selectedCity: string) => {
-   const {isLoading} = useGetUsersQuery();
 
     const users = useSelector(selectBigUsers);
 
@@ -27,5 +25,5 @@ export const useUsersTable = (selectedCity: string) => {
         getCoreRowModel: getCoreRowModel(),
     });
 
-    return { table, isLoading };
+    return { table };
 };

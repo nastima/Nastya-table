@@ -1,12 +1,16 @@
 import { AgeChart } from "../charts/AgeChart";
-import { CityChart } from "../charts/CityChart";
+import { ScoreChart } from "../charts/ScoreChart";
+import {OnlineChart} from "../charts/OnlineChart.tsx";
+import type {User} from "../../../store/api/types.ts";
 
 type Props = {
+    users: User[];
     selectedCity:string;
 }
 
 export const ChartsGrid = ({
-    selectedCity
+    selectedCity,
+    users,
 }:Props)=>{
 
     return (
@@ -20,18 +24,20 @@ export const ChartsGrid = ({
         >
             <div>
                 <AgeChart
+                    users={users}
                     selectedCity={selectedCity}
                 />
             </div>
 
             <div>
-                <CityChart
-                    selectedCity={selectedCity}
-                />
+                <ScoreChart/>
             </div>
 
             <div>
-                {/* третий график позже */}
+                <OnlineChart
+                    users={users}
+                    selectedCity={selectedCity}
+                />
             </div>
 
         </div>
