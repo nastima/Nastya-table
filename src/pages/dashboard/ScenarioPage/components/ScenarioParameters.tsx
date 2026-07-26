@@ -1,16 +1,20 @@
-import {
-    Paper,
-    Typography,
-    Select,
-    MenuItem,
-    Slider,
-    Checkbox,
-    FormControlLabel,
-    Button,
-} from "@mui/material";
+import {Paper, Typography, Select, MenuItem, Button, FormControl} from "@mui/material";
+import {Controller} from "react-hook-form";
+import {useScenarioForm} from '../../../../hooks/useScenarioForm.tsx'
+import {ScenarioSlider} from "./ScenarioSlider.tsx";
+import type {ScenarioFormData} from "../../../../shared/schemas/ScenarioSchema.ts";
 
+type ScenarioParametersProps = {
+    onSubmit: (data: ScenarioFormData) => void | Promise<void>;
+    isLoading: boolean;
+};
 
-export const ScenarioParameters = () => {
+export const ScenarioParameters = ({
+    onSubmit,
+    isLoading,
+} : ScenarioParametersProps) => {
+    const {control, errors, handleSubmit, handleFieldChange} = useScenarioForm();
+
     return (
         <Paper
             elevation={3}
@@ -26,15 +30,15 @@ export const ScenarioParameters = () => {
                 Параметры сценария
             </Typography>
 
-            <div className="
-                mt-6
-                flex
-                flex-col
-                gap-6
-            ">
+            <form
+                className="mt-6 flex flex-col gap-6"
+                onSubmit={handleSubmit(onSubmit)}>
 
                 {/* Шаблон */}
-                <div>
+                <FormControl
+                    fullWidth
+                    error={!!errors.template}
+                >
                     <Typography
                         variant="body2"
                         className="mb-2"
@@ -42,94 +46,78 @@ export const ScenarioParameters = () => {
                         Шаблон сценария
                     </Typography>
 
-                    <Select
-                        fullWidth
-                        defaultValue="transport"
-                    >
-                        <MenuItem value="transport">
-                            Рост стоимости перевозки
-                        </MenuItem>
+                    <Controller
+                        name="template"
+                        control={control}
+                        render={({field}) => (
+                            <Select
+                                {...field}
+                                onChange={(event) =>
+                                    handleFieldChange(
+                                        field,
+                                        event.target.value as ScenarioFormData['template']
+                                    )
+                                }
+                            >
+                                <MenuItem value="activity">
+                                    Рост активности пользователей
+                                </MenuItem>
 
-                        <MenuItem value="warehouse">
-                            Закрытие склада
-                        </MenuItem>
+                                <MenuItem value="inactive">
+                                    Снижение активности
+                                </MenuItem>
 
-                        <MenuItem value="demand">
-                            Изменение спроса
-                        </MenuItem>
-                    </Select>
-                </div>
-
-                {/* Slider */}
-                <div>
-                    <Typography
-                        variant="body2"
-                    >
-                        Изменение тарифа перевозчика
-                    </Typography>
-
-                    <Slider
-                        defaultValue={15}
-                        min={0}
-                        max={100}
-                        valueLabelDisplay="auto"
+                                <MenuItem value="score">
+                                    Увеличение среднего Score
+                                </MenuItem>
+                            </Select>
+                        )}
                     />
-                </div>
+                </FormControl>
 
-                {/* Склад */}
-                <div>
-                    <Typography
-                        variant="body2"
-                    >
-                        Склад
-                    </Typography>
+                {/* Score */}
+                <ScenarioSlider
+                    control={control}
+                    name='scoreDelta'
+                    label='Изменение Score'
+                    min={-50}
+                    max={50}
+                    handleFieldChange={handleFieldChange}
+                />
 
-                    <Select
-                        fullWidth
-                        defaultValue="moscow"
-                    >
-                        <MenuItem value="moscow">
-                            Москва
-                        </MenuItem>
+                {/* Online */}
+                <ScenarioSlider
+                    control={control}
+                    name='onlinePercent'
+                    label='Online пользователей'
+                    min={0}
+                    max={100}
+                    handleFieldChange={handleFieldChange}
+                />
 
-                        <MenuItem value="novosibirsk">
-                            Новосибирск
-                        </MenuItem>
 
-                        <MenuItem value="kazan">
-                            Казань
-                        </MenuItem>
-                    </Select>
-                </div>
-
-                {/* Чекбоксы */}
-                <div>
-                    <FormControlLabel
-                        control={
-                            <Checkbox/>
-                        }
-                        label="
-                        Учитывать сезонность
-                        "
-                    />
-
-                    <FormControlLabel
-                        control={
-                            <Checkbox/>
-                        }
-                        label="
-                        Учитывать изменение спроса
-                        "
-                    />
-                </div>
+                {/* Age */}
+                <ScenarioSlider
+                    control={control}
+                    name='ageDelta'
+                    label='Изменение возраста'
+                    min={-10}
+                    max={10}
+                    handleFieldChange={handleFieldChange}
+                />
 
                 <Button
+                    type="submit"
                     variant="contained"
                     size="large"
+                    disabled={isLoading}
                 >
-                    Запустить симуляцию
+                    {isLoading
+                        ? 'Расчет...'
+                        : 'Запустить симуляцию'
+                    }
                 </Button>
-            </div>
+            </form>
         </Paper>
     );
 };
