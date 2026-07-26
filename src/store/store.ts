@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice.ts';
 import {usersApi} from './api/usersApi.ts';
 import usersReducer from './users/usersSlice.ts';
 import scoreHistoryReducer from './scoreHistory/scoreHistorySlice.ts';
+import {scenarioApi} from "./api/scenarioApi.ts";
 
 export const store = configureStore({
     reducer: {
@@ -10,10 +11,13 @@ export const store = configureStore({
         users: usersReducer,
         scoreHistory: scoreHistoryReducer,
         [usersApi.reducerPath]: usersApi.reducer,
+        [scenarioApi.reducerPath]: scenarioApi.reducer,
     },
 
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(usersApi.middleware),
+        getDefaultMiddleware()
+            .concat(usersApi.middleware)
+            .concat(scenarioApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

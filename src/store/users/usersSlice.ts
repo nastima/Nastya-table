@@ -1,6 +1,7 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
 import type {User} from "../api/types.ts";
+import type { RootState } from '../store';
 
 export const usersAdapter = createEntityAdapter<User>();
 export const initialState = usersAdapter.getInitialState();
@@ -57,3 +58,7 @@ const usersSlice = createSlice({
 export const {setUsers, updateUser, addUser, removeUser} = usersSlice.actions;
 
 export default usersSlice.reducer;
+
+export const usersSelectors = usersAdapter.getSelectors<RootState>(
+    (state) => state.users,
+);
